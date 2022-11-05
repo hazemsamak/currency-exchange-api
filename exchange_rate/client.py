@@ -13,8 +13,6 @@ class ExchangeRateClient():
 
         response = requests.request("GET", url, headers=headers, data=payload)
         response = json.loads(response.text)
-        # with open("rates_file.json", 'r', encoding='utf-8') as f:
-        #     response = json.load(f)
         rates = response["rates"]
         USD = rates["EGP"]
         AED = round(rates["EGP"] / rates["AED"],2)
