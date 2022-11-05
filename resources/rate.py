@@ -6,11 +6,8 @@ import redis
 
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from sqlalchemy.exc import SQLAlchemyError
-from models import RateModel, ExchangeRatesCallModel
 from schemas import RateSchema
 from exchange_rate.client import ExchangeRateClient
-from db import db
 
 
 
@@ -48,24 +45,4 @@ class RateList(MethodView):
             r.set("rates:time_created",current_time_str)
             r.set("rates:exchange_rates", json.dumps(exchange_rates))
 
-        # calls_within_the_last_hour = db.session.query(ExchangeRatesCallModel).filter(ExchangeRatesCallModel.time_created > one_hour_ago).first()
-
-        # if not calls_within_the_last_hour:
-        #     client = ExchangeRateClient()
-        #     exchange_rates = client.list_rates()
-        #     # exchangeRatesCall = ExchangeRatesCallModel(rates= json.dumps(exchange_rates))
-        #     # exchangeRatesCall.save_to_db()
- 
-        #     for key in exchange_rates:
-        #         rate = db.session.query(RateModel).filter_by(name=key).first()
-        #         if rate:
-        #             rate.value = exchange_rates[key]
-        #         else:
-        #             rate = RateModel(name= key, value=exchange_rates[key])
-        #         # db.session.add(rate)
-                
-        #     # db.session.commit()
-        # else:
-            
-        #     exchange_rates = json.loads(calls_within_the_last_hour.rates)
         return exchange_rates, 200
