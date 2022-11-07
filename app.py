@@ -1,7 +1,7 @@
 import os
 from flask import Flask, jsonify
 from flask_smorest import Api
-from flask_jwt_extended import JWTManager
+
 from dotenv import load_dotenv 
 
 
@@ -19,6 +19,5 @@ def create_app(db_url=None):
 
     app.config["PROPAGATE_EXCEPTIONS"] = True
     api = Api(app)
-
     api.register_blueprint(RateBlueprint)
     return app
