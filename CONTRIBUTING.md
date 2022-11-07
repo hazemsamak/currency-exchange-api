@@ -10,3 +10,6 @@ docker build -t exchange-rates-api .
 docker run -dp 5050:5050 -w /app -v "$(pwd):/app" exchange-rates-api sh -c "flask run --host 0.0.0.0 --port=5050"
 docker run -dp 5050:5050 exchange-rates-api sh -c "flask run --host 0.0.0.0 --port=5050"
 ```
+
+## How to run docker-compose
+docker-compose up --build -d
