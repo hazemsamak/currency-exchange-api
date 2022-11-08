@@ -5,7 +5,7 @@ import os
 
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from schemas import RateSchema, RateConverterSchema
+from schemas import DefaultsRateSchema, RateConverterSchema
 from exchange_rate.client import ExchangeRateClient
 
 
@@ -20,12 +20,13 @@ def get_exchange_rates():
 
 @blp.route("/defaults")
 class RateList(MethodView):
-    # @blp.response(200, RateSchema(many=True))
+    @blp.response(200, DefaultsRateSchema())
     def get(cls):
         
         USD_EGP = round(client.exchange_converter(from_currency= 'USD', to_currency= 'EGP'),2)
         AED_EGP = round(client.exchange_converter(from_currency= 'AED', to_currency= 'EGP'),2)
-        return {"USD": USD_EGP, "AED": AED_EGP}, 200
+        rates = {"USD": USD_EGP, "AED": AED_EGP}
+        return {"rates": rates}
 
 @blp.route("/converter")
 class RateList(MethodView):
@@ -34,7 +35,9 @@ class RateList(MethodView):
     def get(cls, args):
         from_currency_symbol = args["from_currency"]
         to_currency_symbol = args["to_currency"]
-        
-        rate = client.exchange_converter(from_currency= from_currency_symbol, to_currency= to_currency_symbol)
-        convertion = {**args, "rate":rate}
+        try:
+            rate = client.exchange_converter(from_currency= from_currency_symbol, to_currency= to_currency_symbol)
+            convertion = {**args, "rate":rate}
+        except:
+            abort(400, "Error message")
         return convertion
