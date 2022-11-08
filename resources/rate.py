@@ -14,7 +14,7 @@ def get_exchange_rates():
     exchange_rates = client.get_cached_rates()
     return exchange_rates
 
-@blp.route("/defaults")
+@blp.route("/sharks/currency-exchange/defaults")
 class RateList(MethodView):
     @blp.response(200, DefaultsRateSchema())
     def get(cls):
@@ -24,7 +24,7 @@ class RateList(MethodView):
         rates = {"USD": USD_EGP, "AED": AED_EGP}
         return {"rates": rates}
 
-@blp.route("/converter")
+@blp.route("/sharks/currency-exchange/converter")
 class RateList(MethodView):
     @blp.arguments(RateConverterSchema, location="query")
     @blp.response(200, RateConverterSchema())

@@ -4,7 +4,7 @@ services:
     image: 'redis'
     ports:
       - "6379:6379"
-  exchange-rates-app:
+  rest-api-app:
     build: .
     command: flask run --host 0.0.0.0 --port=5050
     ports:
