@@ -6,13 +6,11 @@ from datetime import datetime as dt
 from datetime import timedelta as td
 from dateutil import parser
 
-redis_host = os.getenv("REDIS_DB_URI","localhost")
+redis_host = "redis-server"
 redis_port = 6379
 redis_password = ""
 
 class ExchangeRateClient():
-    
-
     def list_rates(self):
         print("Call Exchange Rates API")
         api_key = os.getenv("CURRENCY_EXCHANGE_RATES_API_KEY","")
@@ -24,9 +22,7 @@ class ExchangeRateClient():
         response = requests.request("GET", url, headers=headers, data=payload)
         response = json.loads(response.text)
         rates = response["rates"]
-        # USD = rates["EGP"]
-        # AED = round(rates["EGP"] / rates["AED"],2)
-        # results = {"USD": USD, "AED": AED}
+
         return rates
     
     def get_cached_rates(self):
