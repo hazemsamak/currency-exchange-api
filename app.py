@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 
 
 from resources.rate import blp as RateBlueprint
+from resources.loopback import blp as LoopbackBlueprint
 
 def create_app(db_url=None):
     app = Flask(__name__)
@@ -20,4 +21,5 @@ def create_app(db_url=None):
     app.config["PROPAGATE_EXCEPTIONS"] = True
     api = Api(app)
     api.register_blueprint(RateBlueprint)
+    api.register_blueprint(LoopbackBlueprint)
     return app
