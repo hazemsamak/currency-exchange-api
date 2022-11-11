@@ -32,9 +32,8 @@ def require_app_key(f):
         # if match_api_keys(request.args.get('api-key')):
         if request.headers.get('x-api-key') and match_api_keys(request.headers.get('x-api-key')):
             return f(*args, **kwargs)
-            # return f(*args, **kwargs)
         else:
-            abort(401, "Please send a valid 'api-key'")
+            abort(401, message="Please send a valid 'api-key'")
 
     return decorated
 
