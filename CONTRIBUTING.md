@@ -12,4 +12,7 @@ docker run -dp 5050:5050 exchange-rates-api sh -c "flask run --host 0.0.0.0 --po
 ```
 
 ## How to run docker-compose
-docker-compose up --build -d
+docker compose -p sharks-api up  --build -d
+
+## How to stop docker-compose
+docker stop -p sharks-api down
