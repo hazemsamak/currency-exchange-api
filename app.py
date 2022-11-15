@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 
 
 from resources.rate import blp as RateBlueprint
+from resources.prayers import blp as PrayersBlueprint
 from resources.loopback import blp as LoopbackBlueprint
 
 def create_app(db_url=None):
@@ -22,4 +23,5 @@ def create_app(db_url=None):
     api = Api(app)
     api.register_blueprint(RateBlueprint)
     api.register_blueprint(LoopbackBlueprint)
+    api.register_blueprint(PrayersBlueprint)
     return app
