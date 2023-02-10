@@ -4,7 +4,6 @@ import hashlib
 import os
 
 
-
 def generate_hash_key():
     """
     @return: A hashkey for use to authenticate agains the API.

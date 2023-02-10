@@ -1,10 +1,12 @@
 __author__ = 'hsamak'
 
 from functools import wraps
+
 from flask import request
-from flask_smorest import  abort
+from flask_smorest import abort
 
 api_key = "49c5bc127e5d85080d399a5a0010161e"
+
 
 def match_api_keys(key):
     """
