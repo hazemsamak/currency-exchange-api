@@ -1,13 +1,14 @@
 import os
+
+from dotenv import load_dotenv
 from flask import Flask, jsonify
 from flask_smorest import Api
 
-from dotenv import load_dotenv 
-
-
-from resources.rate import blp as RateBlueprint
-from resources.prayers import blp as PrayersBlueprint
+from resources.disk_usage import blp as DeskUsageBlueprint
 from resources.loopback import blp as LoopbackBlueprint
+from resources.prayers import blp as PrayersBlueprint
+from resources.rate import blp as RateBlueprint
+
 
 def create_app(db_url=None):
     app = Flask(__name__)
@@ -24,4 +25,5 @@ def create_app(db_url=None):
     api.register_blueprint(RateBlueprint)
     api.register_blueprint(LoopbackBlueprint)
     api.register_blueprint(PrayersBlueprint)
+    api.register_blueprint(DeskUsageBlueprint)
     return app
