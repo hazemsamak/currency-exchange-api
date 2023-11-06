@@ -8,3 +8,5 @@ services:
     build: .
     ports:
       - "5050:5050"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
