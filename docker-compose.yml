@@ -8,6 +8,8 @@ services:
   rest-api-app:
     build: .
     container_name: sharks-api
+    volumes:
+      - /media/external:/media/external
     ports:
       - "5050:5050"
     labels:
