@@ -8,7 +8,7 @@ class PrayerTimingsSchema(Schema):
     timings = fields.Dict(keys=fields.Str(), values=fields.Str())
 
 class DeskUsageSchema(Schema):
-    utilization = fields.Dict(keys=fields.Str(), values=fields.Str())
+    utilization = fields.Dict(keys=fields.Str(), values=fields.Dict())
 
 class RateConverterSchema(Schema):
     from_currency = fields.Str()
