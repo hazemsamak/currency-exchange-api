@@ -5,6 +5,7 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+    restart: unless-stopped
   rest-api-app:
     build: .
     container_name: sharks-api
@@ -14,3 +15,4 @@ services:
       - "5050:5050"
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
+    restart: unless-stopped
