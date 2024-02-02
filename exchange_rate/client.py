@@ -5,6 +5,7 @@ from datetime import timedelta as td
 
 import redis
 import requests
+from bs4 import BeautifulSoup
 from dateutil import parser
 
 redis_host = "redis-server"
@@ -24,6 +25,25 @@ class ExchangeRateClient():
         response = requests.request("GET", url, headers=headers, data=payload)
         response = json.loads(response.text)
         rates = response["rates"]
+
+        return rates
+    
+    def list_bm_rates(self):
+        url = 'https://egcurrency.com/en/currency/usd-to-egp/exchange'
+        response = requests.get(url)
+
+
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        # blog_titles = soup.find_all('a', class_='fw-bolder')
+        # for title in blog_titles:
+        #     print(title.text)
+
+        sell_rates = soup.find_all('b', class_='mx-1')
+        for rate in sell_rates:
+            sell_rate = rate.text
+        
+        rates = {"AED": round(self.get_cached_rates()['AED'],4), "EGP": float(sell_rate)}
 
         return rates
 
@@ -53,8 +73,11 @@ class ExchangeRateClient():
 
         return exchange_rates
 
-    def exchange_converter(self, from_currency: str, to_currency: str):
-        exchange_rates = self.get_cached_rates()
+    def exchange_converter(self, from_currency: str, to_currency: str, black_market: bool):
+        if black_market:
+            exchange_rates = self.list_bm_rates()
+        else:
+            exchange_rates = self.get_cached_rates()
 
         from_currency_rate = 1 if from_currency == "USD" else exchange_rates[from_currency]
         to_currency_rate = 1 if to_currency == "USD" else exchange_rates[to_currency]
@@ -63,5 +86,6 @@ class ExchangeRateClient():
 
         return rate
 
-# exchangeRateClient = ExchangeRateClient()
-# print(exchangeRateClient.list_rates())
+exchangeRateClient = ExchangeRateClient()
+print(exchangeRateClient.list_bm_rates())
+
